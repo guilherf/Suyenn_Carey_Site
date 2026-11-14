@@ -4,7 +4,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="Style.css">
+<link rel="stylesheet" href="style.css">
+
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#inicio" aria-label="Suyenn Carey, início">
@@ -80,12 +81,18 @@
   <section class="band dep" id="depoimentos">
     <div class="wrap center">
       <h2 class="sec-title">O que dizem os Pacientes</h2>
-      <div class="quotes">
-        <figure class="card" style="margin-inline:0"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Dra Suyenn uma profissional muito competente, suas consultas com meu filho foram muito proveitosas, ele se sentiu muito confortável ao expor seus conflitos internos. E eu como mãe me senti muito bem com todo tratamento e diagnóstico que tivemos ao final das sessões. Recomendo!!!!”</blockquote><footer>Mãe de paciente</footer></figure>
-        <figure class="card" style="margin-inline:0"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Excelente profissional, muito atenciosa e dedicada. Sou imensamente grata pelo atendimento da Dra. Suyenn. Durante todo o processo de avaliação neuropsicológica, fui tratada com empatia, profissionalismo e escuta atenta. Sua abordagem sensível e técnica me trouxe clareza, acolhimento e entendimento sobre mim mesma. Uma profissional que recomendo de coração.”</blockquote><footer>Paciente</footer></figure>
-        <figure class="card" style="margin-inline:0"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Ótima profissional, tem muito conhecimento, passa segurança e, é atenciosa, super indico!”</blockquote><footer>Paciente</footer></figure>
-        <figure class="card" style="margin-inline:0"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Quero expressar minha gratidão à Dra. Suyenn pelo cuidado e dedicação durante todo o tempo que passamos juntas. Ela foi extremamente atenciosa comigo e com minha mãe, sempre procurando entender nossas necessidades sem qualquer julgamento. As sessões foram muito confortáveis e acolhedoras, o que fez toda a diferença. Além disso, ela contribuiu imensamente para meu diagnóstico, encaminhando meu tratamento na direção certa com os profissionais adequados. Recomendo de coração!”</blockquote><footer>Paciente</footer></figure>
-        <figure class="card" style="margin-inline:0"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Profissional incrível! Atende com muita atenção e cuidado, sempre buscando entender as necessidades de cada paciente. Recomendo fortemente para qualquer pessoa que precise de avaliação e atendimento neuropsicológico.”</blockquote><footer>Paciente</footer></figure>
+      <div class="viewport"><div class="quotes" id="quotes" tabindex="0" aria-label="Depoimentos, deslize para o lado">
+        <figure class="card"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Dra Suyenn uma profissional muito competente, suas consultas com meu filho foram muito proveitosas, ele se sentiu muito confortável ao expor seus conflitos internos. E eu como mãe me senti muito bem com todo tratamento e diagnóstico que tivemos ao final das sessões. Recomendo!!!!”</blockquote><footer>Mãe de paciente</footer></figure>
+        <figure class="card"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Excelente profissional, muito atenciosa e dedicada. Sou imensamente grata pelo atendimento da Dra. Suyenn. Durante todo o processo de avaliação neuropsicológica, fui tratada com empatia, profissionalismo e escuta atenta. Sua abordagem sensível e técnica me trouxe clareza, acolhimento e entendimento sobre mim mesma. Uma profissional que recomendo de coração.”</blockquote><footer>Paciente</footer></figure>
+        <figure class="card"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Ótima profissional, tem muito conhecimento, passa segurança e, é atenciosa, super indico!”</blockquote><footer>Paciente</footer></figure>
+        <figure class="card"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Quero expressar minha gratidão à Dra. Suyenn pelo cuidado e dedicação durante todo o tempo que passamos juntas. Ela foi extremamente atenciosa comigo e com minha mãe, sempre procurando entender nossas necessidades sem qualquer julgamento. As sessões foram muito confortáveis e acolhedoras, o que fez toda a diferença. Além disso, ela contribuiu imensamente para meu diagnóstico, encaminhando meu tratamento na direção certa com os profissionais adequados. Recomendo de coração!”</blockquote><footer>Paciente</footer></figure>
+        <figure class="card"><div class="stars" aria-label="5 estrelas">★★★★★</div><blockquote>“Profissional incrível! Atende com muita atenção e cuidado, sempre buscando entender as necessidades de cada paciente. Recomendo fortemente para qualquer pessoa que precise de avaliação e atendimento neuropsicológico.”</blockquote><footer>Paciente</footer></figure>
+      </div>
+      </div>
+      <div class="nav">
+        <button class="arrow" id="qPrev" type="button" aria-label="Depoimento anterior">&larr;</button>
+        <div class="dots" id="qDots"></div>
+        <button class="arrow" id="qNext" type="button" aria-label="Próximo depoimento">&rarr;</button>
       </div>
     </div>
   </section>
@@ -111,6 +118,30 @@
 
 <script>
 (function () {
+
+  var q = document.getElementById('quotes');
+  if (q) {
+    var cards = q.querySelectorAll('.card'), dots = document.getElementById('qDots');
+    var prev = document.getElementById('qPrev'), next = document.getElementById('qNext');
+    cards.forEach(function (c, i) {
+      var d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Ir ao depoimento ' + (i + 1));
+      d.addEventListener('click', function () { q.scrollTo({ left: c.offsetLeft - q.offsetLeft, behavior: 'smooth' }); });
+      dots.appendChild(d);
+    });
+    function step() { return cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(q).columnGap || 24); }
+    function sync() {
+      var max = q.scrollWidth - q.clientWidth, x = q.scrollLeft, idx = 0, best = 1e9;
+      cards.forEach(function (c, i) { var dist = Math.abs(c.offsetLeft - q.offsetLeft - x); if (dist < best) { best = dist; idx = i; } });
+      if (x >= max - 4) idx = cards.length - 1;
+      dots.querySelectorAll('button').forEach(function (d, i) { d.setAttribute('aria-current', i === idx); });
+      prev.disabled = x <= 4; next.disabled = x >= max - 4;
+    }
+    prev.addEventListener('click', function () { q.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { q.scrollBy({ left: step(), behavior: 'smooth' }); });
+    q.addEventListener('scroll', function () { window.requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
   var whatsapp = '5569981179829'; /* só números: 55 + DDD + número */
   var msg = encodeURIComponent('Olá, Suyenn! Gostaria de agendar uma avaliação neuropsicológica.');
   document.querySelectorAll('[data-whats]').forEach(function (a) {

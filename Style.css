@@ -1,3 +1,4 @@
+/* Layout: one-page clinic site, sections in the order of the client PDF: hero, indications, bio, steps, testimonials, contact. */
 :root {
   --bg: #f7f7fd;          /* hero ground */
   --bar: #c9d9f4;         /* header band */
@@ -118,14 +119,34 @@ header .btn { min-height: 38px; padding: .5rem 1.2rem; font-size: .85rem; }
 @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .steps { grid-template-columns: 1fr; } }
 
-/* 5 depoimentos */
-.dep .quotes { column-count: 3; column-gap: 24px; margin-top: clamp(28px, 4vw, 44px); text-align: left; }
-.card { break-inside: avoid; background: var(--surface); border-radius: 22px; padding: 22px 26px; margin: 0 0 24px; box-shadow: 0 6px 22px rgba(38, 38, 74, .12); }
+/* 5 depoimentos: carrossel com encaixe, cards de mesma altura */
+.dep .viewport { position: relative; margin-top: clamp(28px, 4vw, 44px); }
+.quotes {
+  display: flex; gap: 24px; text-align: left;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 10px 16px 34px; margin: 0 -16px; scroll-padding-left: 16px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+}
+.quotes::-webkit-scrollbar { display: none; }
+.card {
+  flex: 0 0 calc((100% - 48px) / 3); scroll-snap-align: start;
+  display: flex; flex-direction: column; margin: 0; min-width: 0;
+  background: var(--surface); border-radius: 22px; padding: 24px 26px;
+  box-shadow: 0 6px 22px rgba(38, 38, 74, .12);
+}
 .stars { color: var(--accent); letter-spacing: .2em; font-size: .85rem; }
-.card blockquote { margin: .8rem 0 1rem; color: var(--soft); font-size: .98rem; }
-.card footer { border-top: 1px solid var(--line); padding-top: .6rem; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); }
-@media (max-width: 960px) { .dep .quotes { column-count: 2; } }
-@media (max-width: 620px) { .dep .quotes { column-count: 1; } }
+.card blockquote { margin: .8rem 0 1.2rem; color: var(--soft); font-size: .98rem; line-height: 1.65; flex: 1; }
+.card footer { border-top: 1px solid var(--line); padding-top: .7rem; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); }
+.nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 4px; }
+.nav button.arrow { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); font-size: 1.2rem; line-height: 1; cursor: pointer; transition: background .15s, color .15s; }
+.nav button.arrow:hover:not(:disabled) { background: var(--ink); color: var(--surface); }
+.nav button.arrow:disabled { opacity: .35; cursor: default; }
+.dots { display: flex; gap: 8px; }
+.dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: var(--line); cursor: pointer; }
+.dots button[aria-current="true"] { background: var(--accent); width: 26px; border-radius: 999px; }
+@media (max-width: 960px) { .card { flex-basis: calc((100% - 24px) / 2); } }
+@media (max-width: 620px) { .card { flex-basis: 86%; } .quotes { gap: 16px; } }
+@media (prefers-reduced-motion: reduce) { .quotes { scroll-behavior: auto; } }
 
 /* 6 contato */
 .cta { background: var(--cta); color: var(--on-dark); text-align: center; padding-top: clamp(56px, 8vw, 104px); }
